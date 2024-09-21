@@ -1,0 +1,61 @@
+{
+  "session": {
+    "nick": "Adam"
+  },
+  "users": [
+    {
+      "nick": "admin",
+      "pass": "admin"
+    },
+    {
+      "nick": "Gepeto",
+      "pass": "123"
+    },
+    {
+      "nick": "Adam",
+      "pass": "123"
+    }
+  ],
+  "posts": [
+    {
+      "title": "Pog",
+      "content": "O que acham deste peixe?",
+      "image": "https://media.tenor.com/RRhaQlfYhIcAAAAC/pog.gif",
+      "media": 9.873046875,
+      "user": "admin",
+      "id": "55df"
+    },
+    {
+      "title": "Fotografei",
+      "content": "Tirei esta foto de paisagem, queria saber o que acham dela. ",
+      "image": "https://wallpaperaccess.com/full/112722.jpg",
+      "media": 10,
+      "user": "admin",
+      "id": "7e37"
+    },
+    {
+      "title": "Novo Design",
+      "content": "Fiz um novo design de copo e estou pensando em vender. Gostaria de uma prévia.",
+      "image": "https://th.bing.com/th/id/R.462afb4f68924d0fb045debc9430c49c?rik=qR3Qr%2bxKBOzuzA&riu=http%3a%2f%2f3.bp.blogspot.com%2f_uKyoBpi_Oe0%2fS-oFfn_QadI%2fAAAAAAAAAfE%2fgeQSKdOWRuI%2fs1600%2fcopos_fantasmas.jpg&ehk=7k3EoGiCG3Uhmt72ljYx%2fCVbAV5csMXvwFR361QDJ9o%3d&risl=&pid=ImgRaw&r=0",
+      "media": 2.25,
+      "user": "admin",
+      "id": "90e7"
+    },
+    {
+      "title": "Gepeto",
+      "content": "Que nota dão para o Gepeto?",
+      "image": "https://th.bing.com/th/id/R.4c9e7ff541b7cc5a12cf87d6342ae608?rik=YpOb1RcTowmRBg&riu=http%3a%2f%2fvignette3.wikia.nocookie.net%2fdisney%2fimages%2fe%2fe2%2fPinocchio-pinocchio-4960011-960-720.jpg%2frevision%2flatest%3fcb%3d20100628192145&ehk=dVmMB%2bwS157%2bALxY3dBoPgNtRhB6o4rKV7e3S%2fNu6VY%3d&risl=&pid=ImgRaw&r=0",
+      "media": "5",
+      "user": "admin",
+      "id": "9985"
+    },
+    {
+      "id": "76a4",
+      "title": "Adam",
+      "content": "Adam Posto Isso",
+      "image": "",
+      "media": 0,
+      "user": "Adam"
+    }
+  ]
+}
