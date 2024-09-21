@@ -78,17 +78,35 @@ async function writePosts() {
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <div class="btn-group">
-                    <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
-                        onclick="classificarPost('` +
-      post.id +
-      `')"
-                      >
-                      Classificar
-                      </button>
-                      `;
+                    <div class="btn-group">`;
+
+    let classified = false;
+    if (post.classificados) {
+      for (let i = 0; i < post.classificados.length; i++) {
+        if (post.classificados[i] == session.nick) {
+          classified = true;
+          break;
+        }
+      }
+    }
+
+    if (classified == true) {
+      temp += `<small>Já classificou!</small>`;
+    } else if (session.nick == post.user) {
+    } else {
+      temp +=
+        `<button
+      type="button"
+      class="btn btn-sm btn-outline-secondary"
+      onclick="classificarPost('` +
+        post.id +
+        `')"
+      >
+      Classificar
+      </button>
+      `;
+    }
+
     if (post.user === session.nick) {
       temp +=
         `<button
@@ -220,6 +238,14 @@ async function classificarPost(id) {
       }
     }
 
+    let newClassificados = post.classificados;
+    console.log(newClassificados);
+    if (newClassificados) {
+      newClassificados.push(session.nick);
+    } else {
+      newClassificados = [session.nick];
+    }
+
     if (post.media === 0) {
       await fetch(`${postsURL}/${id}`, {
         method: "PUT",
@@ -231,6 +257,7 @@ async function classificarPost(id) {
           content: post.content,
           image: post.image,
           media: nota,
+          classificados: newClassificados,
           user: post.user,
         }),
       });
@@ -247,6 +274,7 @@ async function classificarPost(id) {
           content: post.content,
           image: post.image,
           media: nova,
+          classificados: newClassificados,
           user: post.user,
         }),
       });
