@@ -1,6 +1,6 @@
 {
   "session": {
-    "nick": "Adam"
+    "nick": ""
   },
   "users": [
     {
@@ -13,6 +13,11 @@
     },
     {
       "nick": "Adam",
+      "pass": "123"
+    },
+    {
+      "id": "774d",
+      "nick": "Ademiro",
       "pass": "123"
     }
   ],
@@ -56,6 +61,14 @@
       "image": "",
       "media": 0,
       "user": "Adam"
+    },
+    {
+      "id": "2d05",
+      "title": "Gepeto 2",
+      "content": "Gepeto postou isso",
+      "image": "",
+      "media": 0,
+      "user": "Gepeto"
     }
   ]
 }

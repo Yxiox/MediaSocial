@@ -20,8 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 writePosts();
 
-function openPostWindow() {
-  postWindow.style.display = "flex";
+async function openPostWindow() {
+  let session = await getSession();
+
+  if (session.nick != "") {
+    postWindow.style.display = "flex";
+  } else {
+    alert("Não está logado!");
+  }
 }
 
 function closePostWindow() {
@@ -82,18 +88,18 @@ async function writePosts() {
                       >
                       Classificar
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary"
-                        onclick="editPost('` +
-      post.id +
-      `')"
-                      >
-                        Editar
-                      </button>`;
+                      `;
     if (post.user === session.nick) {
       temp +=
         `<button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        onclick="editPost('` +
+        post.id +
+        `')"
+                      >
+                        Editar
+                      </button><button
                         type="button"
                         class="btn btn-sm btn-danger"
                         onclick="deletePost('` +
@@ -194,53 +200,59 @@ async function deletePost(id) {
 }
 
 async function classificarPost(id) {
-  let posts = await getPosts();
-  let post;
+  let session = await getSession();
 
-  let nota = prompt("Digite sua nota: (máx: 10 | min: 0)");
+  if (session.nick != "") {
+    let posts = await getPosts();
+    let post;
 
-  if (parseFloat(nota) > 10) {
-    nota = 10;
-  } else if (nota < 0) {
-    nota = 0;
-  }
+    let nota = prompt("Digite sua nota: (máx: 10 | min: 0)");
 
-  for (let i = 0; i < posts.length; i++) {
-    if (posts[i].id == id) {
-      post = posts[i];
+    if (parseFloat(nota) > 10) {
+      nota = 10;
+    } else if (nota < 0) {
+      nota = 0;
     }
-  }
 
-  if (post.media === 0) {
-    await fetch(`${postsURL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: post.title,
-        content: post.content,
-        image: post.image,
-        media: nota,
-        user: post.user,
-      }),
-    });
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].id == id) {
+        post = posts[i];
+      }
+    }
+
+    if (post.media === 0) {
+      await fetch(`${postsURL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: post.title,
+          content: post.content,
+          image: post.image,
+          media: nota,
+          user: post.user,
+        }),
+      });
+    } else {
+      let nova = parseFloat(nota) + parseFloat(post.media);
+      nova = nova / 2;
+      await fetch(`${postsURL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: post.title,
+          content: post.content,
+          image: post.image,
+          media: nova,
+          user: post.user,
+        }),
+      });
+    }
   } else {
-    let nova = parseFloat(nota) + parseFloat(post.media);
-    nova = nova / 2;
-    await fetch(`${postsURL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: post.title,
-        content: post.content,
-        image: post.image,
-        media: nova,
-        user: post.user,
-      }),
-    });
+    alert("Não está logado!");
   }
 }
 
@@ -256,6 +268,32 @@ async function getSession() {
   let session = await sessionRaw.json();
 
   return session;
+}
+
+async function register(nick, pass) {
+  let users = await getUsers();
+  let available = true;
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].nick == nick) {
+      available = false;
+      break;
+    }
+  }
+  if (available == true) {
+    await fetch(`${usersURL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nick: nick,
+        pass: pass,
+      }),
+    });
+    alert("Cadastrado com sucesso!");
+  } else {
+    alert("Usuário indisponível");
+  }
 }
 
 async function logar(nick, pass) {
